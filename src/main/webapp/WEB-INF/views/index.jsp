@@ -20,7 +20,8 @@
 
 <body>
 Заявки :
-
+<a href="<c:url value='/save'/>">Добавить инцидент</a>
+<a href="<c:url value='/edit'/>">Редактировать инцидент</a>
 <table class="table table-bordered table-hover text-center"
        data-toggle="" data-search="false" data-filter-control="true"
        data-show-export="true" data-click-to-select="true">
