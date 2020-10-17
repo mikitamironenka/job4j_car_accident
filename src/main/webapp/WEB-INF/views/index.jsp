@@ -19,15 +19,43 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <body>
-Hello :
-    <table>
-        <c:forEach items="${users}" var="user">
-            <tr>
-                <td>
-                    <div><c:out value="${user}"/></div>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+Заявки :
+
+<table class="table table-bordered table-hover text-center"
+       data-toggle="" data-search="false" data-filter-control="true"
+       data-show-export="true" data-click-to-select="true">
+    <thead>
+    <tr class="">
+        <th data-field=id data-filter-control="select"
+            data-sortable="true">Номер правонарушения</th>
+        <th data-field=name data-filter-control="select"
+            data-sortable="true">Наименование правонарушения</th>
+        <th data-field=text data-filter-control="select"
+            data-sortable="true">Описание правонарушения</th>
+        <th data-field=address data-filter-control="select"
+            data-sortable="true">Адрес правонарушения</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+    <c:forEach items="${accidents}" var="accident">
+
+        <tr>
+            <td>${accident.id}</td>
+            <td>${accident.name}</td>
+            <td>${accident.text}</td>
+            <td>${accident.address}</td>
+        </tr>
+    </c:forEach>
+
+
+    </tbody>
+
+
+</table>
+</div>
+
+
 </body>
 </html>
