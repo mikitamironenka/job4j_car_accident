@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 @Repository
@@ -47,6 +48,10 @@ public class AccidentMem {
     public void edit(Accident accident) {
         accidents.get(accident.getId()).setName(accident.getName());
         accidents.get(accident.getId()).setText(accident.getText());
-        accidents.get(accident.getAddress()).setAddress(accident.getAddress());
+        accidents.get(accident.getId()).setAddress(accident.getAddress());
+    }
+
+    public Accident findById(int id) {
+        return accidents.get(id);
     }
 }
