@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class AccidentType {
 
+
     private String name;
     private int id;
 
@@ -15,4 +16,5 @@ public class AccidentType {
         type.name = name;
         return type;
     }
+
 }
