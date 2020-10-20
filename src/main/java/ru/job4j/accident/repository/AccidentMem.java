@@ -38,8 +38,6 @@ public class AccidentMem {
         return ACCIDENT_MEM;
     }
 
-
-
     public void create(Accident accident) {
         accident.setId(incId());
         accidents.put(accident.getId(), accident);
@@ -49,6 +47,7 @@ public class AccidentMem {
         accidents.get(accident.getId()).setName(accident.getName());
         accidents.get(accident.getId()).setText(accident.getText());
         accidents.get(accident.getId()).setAddress(accident.getAddress());
+        accidents.get(accident.getId()).setType(accident.getType());
     }
 
     public Accident findById(int id) {
