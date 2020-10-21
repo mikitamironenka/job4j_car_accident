@@ -3,7 +3,9 @@ package ru.job4j.accident.repository;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.Rule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class AccidentMem {
 
     private static AccidentMem ACCIDENT_MEM = new AccidentMem();
 
-    private HashMap<Integer, Accident> accidents = new HashMap<Integer, Accident>();
+    private HashMap<Integer, Accident> accidents = new HashMap<>();
     private static int incId = 0;
 
     private AccidentMem() {
@@ -52,5 +54,14 @@ public class AccidentMem {
 
     public Accident findById(int id) {
         return accidents.get(id);
+    }
+
+    public void addRulesToAccident(Accident accident, String[] iDs) {
+        accident.setRules(new ArrayList<>());
+        for (String id : iDs) {
+            Rule rule = Rule.of(Integer.valueOf(id), "");
+
+            accident.getRules().add(rule);
+        }
     }
 }

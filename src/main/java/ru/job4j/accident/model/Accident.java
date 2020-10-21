@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,6 +19,7 @@ public class Accident {
     private String text;
     private String address;
     private AccidentType type;
+    private List<Rule> rules = new ArrayList<>();
 
     public Accident(String name, String text, String address) {
         this.name = name;
@@ -34,5 +40,6 @@ public class Accident {
         this.text = text;
         this.address = address;
         this.type = type;
+        this.rules = new ArrayList<>();
     }
 }
