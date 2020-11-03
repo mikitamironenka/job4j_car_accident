@@ -15,7 +15,16 @@ public class AccidentMem {
 
     private HashMap<Integer, Accident> accidents = new HashMap<Integer, Accident>();
     private static int incId = 0;
+    private HashMap<Integer, Accident> accidents = init();
 
+    private HashMap<Integer, Accident> init() {
+        HashMap<Integer, Accident> map = new HashMap<Integer, Accident>();
+        map.put(1, new Accident(1, "Авария", "алоыд дфлоалфы влфоа ", "Советская 50"));
+        map.put(2, new Accident(2, "ДТП", "алоыд дфлоалфы влфоа ", "Кирова 10"));
+        map.put(3, new Accident(3, "Наезд", "алоыд дфлоалфы влфоа ", "Плеханова 15"));
+        map.put(4, new Accident(4, "Столкновение", "алоыд дфлоалфы влфоа ", "Пушкина 1"));
+        map.put(5, new Accident(5, "Авария", "алоыд дфлоалфы влфоа ", "Ленинский пр-кт 56"));
+        return map;
     private AccidentMem() {
         Accident ac1 = new Accident(incId(), "Авария", "алоыд дфлоалфы влфоа ", "Советская 50");
         Accident ac2 =new Accident(incId(), "ДТП", "алоыд дфлоалфы влфоа ", "Кирова 10");
@@ -54,4 +63,6 @@ public class AccidentMem {
     public Accident findById(int id) {
         return accidents.get(id);
     }
+
+
 }
