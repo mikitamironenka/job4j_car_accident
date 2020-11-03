@@ -13,4 +13,11 @@ public class Accident {
     private String name;
     private String text;
     private String address;
+
+    public Accident(String name, String text, String address) {
+        this.name = name;
+        this.text = text;
+        this.address = address;
+    }
+
 }

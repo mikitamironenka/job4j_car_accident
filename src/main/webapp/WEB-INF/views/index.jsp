@@ -19,7 +19,10 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <body>
-Заявки :
+Инциденты :
+
+<a href="<c:url value='/create'/>">Добавить инцидент</a>
+
 
 <table class="table table-bordered table-hover text-center"
        data-toggle="" data-search="false" data-filter-control="true"
@@ -27,13 +30,13 @@
     <thead>
     <tr class="">
         <th data-field=id data-filter-control="select"
-            data-sortable="true">Номер правонарушения</th>
+            data-sortable="true">Номер инцидента</th>
         <th data-field=name data-filter-control="select"
-            data-sortable="true">Наименование правонарушения</th>
+            data-sortable="true">Наименование инцидента</th>
         <th data-field=text data-filter-control="select"
-            data-sortable="true">Описание правонарушения</th>
+            data-sortable="true">Описание инцидента</th>
         <th data-field=address data-filter-control="select"
-            data-sortable="true">Адрес правонарушения</th>
+            data-sortable="true">Адрес инцидента</th>
     </tr>
 
     </thead>
@@ -43,12 +46,13 @@
 
         <tr>
             <td>${accident.id}</td>
-            <td>${accident.name}</td>
+            <td>${accident.name}
+                <a href="<c:url value='/update?id=${accident.id}'/>">Редактировать инцидент</a>
+            </td>
             <td>${accident.text}</td>
             <td>${accident.address}</td>
         </tr>
     </c:forEach>
-
 
     </tbody>
 
