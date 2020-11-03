@@ -34,12 +34,12 @@ public class Accident {
         this.address = address;
     }
 
-    public Accident(int id, String name, AccidentType type, String text, String address) {
+    public Accident(int id, String name, AccidentType type, List<Rule> rules, String text, String address) {
         this.id = id;
         this.name = name;
         this.text = text;
         this.address = address;
         this.type = type;
-        this.rules = new ArrayList<>();
+        this.rules = rules;
     }
 }
