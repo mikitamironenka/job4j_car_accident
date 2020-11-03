@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.repository.AccidentMem;
 import ru.job4j.accident.service.AccidentService;
 
 import java.util.ArrayList;
@@ -22,12 +24,20 @@ public class AccidentControl {
     }
 
     public List<Accident> getAccidents(){
-        return new ArrayList<Accident>(this.accidentService.getAccidents().values());
+        return new ArrayList<>(this.accidentService.getAccidents().values());
     }
 
-    @GetMapping("/create")
-    public String create() {
+    @GetMapping(value = "/create", produces = { "application/json", "application/xml" })
+    public String create(Model model) {
+        model.addAttribute("types", this.accidentService.getTypes());
         return "accident/create";
+    }
+
+    @GetMapping("/update")
+    public String update(@RequestParam("id") int id, Model model) {
+        model.addAttribute("accident", accidentService.findById(id));
+        model.addAttribute("types", this.accidentService.getTypes());
+        return "accident/update";
     }
 
     @PostMapping("/save")
@@ -42,9 +52,5 @@ public class AccidentControl {
         return "redirect:/";
     }
 
-    @GetMapping("/update")
-    public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidentService.findById(id));
-        return "accident/update";
-    }
+
 }

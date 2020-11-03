@@ -3,7 +3,10 @@ package ru.job4j.accident.repository;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +15,10 @@ import java.util.List;
 public class AccidentMem {
 
     private static AccidentMem ACCIDENT_MEM = new AccidentMem();
-    private HashMap<Integer, Accident> accidents = new HashMap<Integer, Accident>();
+
+    private HashMap<Integer, Accident> accidents = new HashMap<>();
+    private List<AccidentType> types = new ArrayList<>();
+
     private static int incId = 0;
 
     private AccidentMem() {
@@ -27,6 +33,10 @@ public class AccidentMem {
         accidents.put(ac3.getId(), ac3);
         accidents.put(ac4.getId(), ac4);
         accidents.put(ac5.getId(), ac5);
+
+        types.add(AccidentType.of(1, "Две машины"));
+        types.add(AccidentType.of(2, "Машина и человек"));
+        types.add(AccidentType.of(3, "Машина и велосипед"));
     }
 
     private static int incId() {
@@ -46,6 +56,7 @@ public class AccidentMem {
         findById(accident.getId()).setName(accident.getName());
         findById(accident.getId()).setText(accident.getText());
         findById(accident.getId()).setAddress(accident.getAddress());
+        findById(accident.getId()).setType(accident.getType());
     }
 
     public Accident findById(int id) {
