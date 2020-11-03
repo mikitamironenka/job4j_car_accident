@@ -8,7 +8,6 @@ public class AccidentType {
     private String name;
     private int id;
 
-
     public static AccidentType of(int id, String name) {
         AccidentType type = new AccidentType();
         type.id = id;

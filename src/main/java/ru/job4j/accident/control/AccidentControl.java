@@ -1,4 +1,4 @@
-package ru.job4j.accident.controller;
+package ru.job4j.accident.control;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,22 +24,20 @@ public class AccidentControl {
     }
 
     public List<Accident> getAccidents(){
-        return new ArrayList<Accident>(this.accidentService.getAccidents().values());
+        return new ArrayList<>(this.accidentService.getAccidents().values());
     }
-
-//    @GetMapping("/create")
-//    public String create() {
-//        return "accident/create";
-//    }
 
     @GetMapping(value = "/create", produces = { "application/json", "application/xml" })
     public String create(Model model) {
-        List<AccidentType> types = new ArrayList<>();
-        types.add(AccidentType.of(1, "Две машины"));
-        types.add(AccidentType.of(2, "Машина и человек"));
-        types.add(AccidentType.of(3, "Машина и велосипед"));
-        model.addAttribute("types", types);
+        model.addAttribute("types", this.accidentService.getTypes());
         return "accident/create";
+    }
+
+    @GetMapping("/update")
+    public String update(@RequestParam("id") int id, Model model) {
+        model.addAttribute("accident", accidentService.findById(id));
+        model.addAttribute("types", this.accidentService.getTypes());
+        return "accident/update";
     }
 
     @PostMapping("/save")
@@ -54,9 +52,5 @@ public class AccidentControl {
         return "redirect:/";
     }
 
-    @GetMapping("/update")
-    public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidentService.findById(id));
-        return "accident/update";
-    }
+
 }
