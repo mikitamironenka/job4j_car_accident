@@ -10,9 +10,9 @@ import java.util.HashMap;
 @Repository
 public class AccidentMem {
 
-    private   HashMap<Integer, Accident> accidents = init();
+    private HashMap<Integer, Accident> accidents = init();
 
-    private HashMap<Integer, Accident> init () {
+    private HashMap<Integer, Accident> init() {
         HashMap<Integer, Accident> map = new HashMap<Integer, Accident>();
         map.put(1, new Accident(1, "Авария", "алоыд дфлоалфы влфоа ", "Советская 50"));
         map.put(2, new Accident(2, "ДТП", "алоыд дфлоалфы влфоа ", "Кирова 10"));
@@ -21,4 +21,6 @@ public class AccidentMem {
         map.put(5, new Accident(5, "Авария", "алоыд дфлоалфы влфоа ", "Ленинский пр-кт 56"));
         return map;
     }
+
+
 }
