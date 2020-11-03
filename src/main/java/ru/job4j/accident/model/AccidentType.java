@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AccidentType {
-        
+
     private String name;
     private int id;
 

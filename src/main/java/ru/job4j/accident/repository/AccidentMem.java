@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +62,4 @@ public class AccidentMem {
     public Accident findById(int id) {
         return accidents.get(id);
     }
-
-
 }
