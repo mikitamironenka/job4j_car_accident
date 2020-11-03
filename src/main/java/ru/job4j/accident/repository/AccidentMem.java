@@ -43,11 +43,11 @@ public class AccidentMem {
         accidents.put(accident.getId(), accident);
     }
 
-    public void edit(Accident accident) {
-        accidents.get(accident.getId()).setName(accident.getName());
-        accidents.get(accident.getId()).setText(accident.getText());
-        accidents.get(accident.getId()).setAddress(accident.getAddress());
-        accidents.get(accident.getId()).setType(accident.getType());
+    public void update(Accident accident) {
+        findById(accident.getId()).setName(accident.getName());
+        findById(accident.getId()).setText(accident.getText());
+        findById(accident.getId()).setAddress(accident.getAddress());
+        findById(accident.getId()).setType(accident.getType());
     }
 
     public Accident findById(int id) {

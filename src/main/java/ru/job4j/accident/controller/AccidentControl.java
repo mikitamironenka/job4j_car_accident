@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.service.AccidentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +17,14 @@ import java.util.List;
 @Controller
 public class AccidentControl {
 
-    private final static AccidentMem accidents = AccidentMem.instOf();
+    private AccidentService accidentService;
 
-//    private final static AccidentControl ACCIDENT_CONTROL = new AccidentControl();
-
-    public AccidentControl() {
+    public AccidentControl(AccidentService accidentService) {
+        this.accidentService = accidentService;
     }
 
-//    public static AccidentControl instOfAccControl() {
-//        return ACCIDENT_CONTROL;
-//    }
-
-    public static List<Accident> getAccidents(){
-        return new ArrayList<Accident>(accidents.getAccidents().values());
+    public List<Accident> getAccidents(){
+        return new ArrayList<Accident>(this.accidentService.getAccidents().values());
     }
 
 //    @GetMapping("/create")
@@ -48,19 +44,19 @@ public class AccidentControl {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident) {
-        accidents.create(accident);
+        accidentService.create(accident);
         return "redirect:/";
     }
 
     @PostMapping("/edit")
     public String edit(@ModelAttribute Accident accident) {
-        accidents.edit(accident);
+        accidentService.update(accident);
         return "redirect:/";
     }
 
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidents.findById(id));
+        model.addAttribute("accident", accidentService.findById(id));
         return "accident/update";
     }
 }
