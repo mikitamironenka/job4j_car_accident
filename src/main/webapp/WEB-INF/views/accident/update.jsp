@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <body>
-<form action="<c:url value='/edit?id=${accident.id}'/>" method='POST'>
+<form action="<c:url value='/save?id=${accident.id}'/>" method='POST'>
     <table>
         <tr>
             <td>Название:</td>
