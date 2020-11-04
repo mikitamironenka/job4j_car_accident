@@ -5,7 +5,6 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentMem;
-
 import java.util.HashMap;
 import java.util.List;
 

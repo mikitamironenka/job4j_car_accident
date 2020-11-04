@@ -20,6 +20,4 @@ public class IndexControl {
         model.addAttribute("accidents", this.accidentService.getAccidents().values());
         return "index";
     }
-
-
 }
