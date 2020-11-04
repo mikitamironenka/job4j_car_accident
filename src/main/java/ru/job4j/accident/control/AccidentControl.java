@@ -10,6 +10,7 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @Controller
 public class AccidentControl {
@@ -23,7 +24,7 @@ public class AccidentControl {
     @GetMapping(value = "/create", produces = { "application/json", "application/xml" })
     public String create(Model model) {
         model.addAttribute("types", this.accidentService.getTypes());
-        model.addAttribute("rules", this.accidentService.getRules());
+        model.addAttribute("rules", new ArrayList<>(this.accidentService.getRules().values()));
         return "accident/create";
     }
 

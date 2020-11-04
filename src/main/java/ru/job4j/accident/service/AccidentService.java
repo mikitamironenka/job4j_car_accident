@@ -26,7 +26,7 @@ public class AccidentService {
         return this.accidentMem.getTypes();
     }
 
-    public List<Rule> getRules() {
+    public HashMap<Integer, Rule> getRules() {
         return this.accidentMem.getRules();
     }
 
@@ -43,6 +43,8 @@ public class AccidentService {
     }
 
     public void addRulesToAccident(Accident accident, String[] rIds) {
-        this.accidentMem.addRulesToAccident(accident, rIds);
+        for (String id : rIds) {
+            accident.getRules().add(accidentMem.findRuleById(Integer.parseInt(id)));
+        }
     }
 }

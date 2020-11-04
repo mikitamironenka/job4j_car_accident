@@ -1,5 +1,6 @@
 package ru.job4j.accident.repository;
 
+import com.sun.javafx.image.IntPixelGetter;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
@@ -18,7 +19,7 @@ public class AccidentMem {
 
     private HashMap<Integer, Accident> accidents = new HashMap<>();
     private List<AccidentType> types = new ArrayList<>();
-    private List<Rule> rules = new ArrayList<>();
+    private HashMap<Integer, Rule> rules = new HashMap<>();
 
     private static int incId = 0;
 
@@ -39,9 +40,12 @@ public class AccidentMem {
         types.add(AccidentType.of(2, "Машина и человек"));
         types.add(AccidentType.of(3, "Машина и велосипед"));
 
-        rules.add(Rule.of(1, "Статья. 1"));
-        rules.add(Rule.of(2, "Статья. 2"));
-        rules.add(Rule.of(3, "Статья. 3"));
+        Rule rule1 = Rule.of(1, "Статья. 1");
+        Rule rule2 = Rule.of(2, "Статья. 2");
+        Rule rule3 = Rule.of(3, "Статья. 3");
+        rules.put(rule1.getId(), rule1);
+        rules.put(rule2.getId(), rule2);
+        rules.put(rule3.getId(), rule3);
     }
 
     private static int incId() {
@@ -54,6 +58,7 @@ public class AccidentMem {
 
     public void create(Accident accident) {
         accident.setId(incId());
+
         accidents.put(accident.getId(), accident);
     }
 
@@ -68,11 +73,13 @@ public class AccidentMem {
         return accidents.get(id);
     }
 
+    public Rule findRuleById(int ruleId) {
+        return rules.get(ruleId);
+    }
+
     public void addRulesToAccident(Accident accident, String[] iDs) {
-        accident.setRules(new ArrayList<>());
         for (String id : iDs) {
-            Rule rule = Rule.of(Integer.valueOf(id), "");
-            accident.getRules().add(rule);
+            accident.getRules().add(rules.get(id));
         }
     }
 }
