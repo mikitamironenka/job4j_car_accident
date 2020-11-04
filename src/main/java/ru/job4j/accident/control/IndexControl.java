@@ -17,7 +17,7 @@ public class IndexControl {
     @GetMapping("/")
     public String index(Model model) {
 
-        model.addAttribute("accidents", accidentService.getAccidents());
+        model.addAttribute("accidents", this.accidentService.getAccidents().values());
         return "index";
     }
 
