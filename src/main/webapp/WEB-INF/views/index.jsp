@@ -53,7 +53,7 @@
             <td>${accident.name}
                 <a href="<c:url value='/update?id=${accident.id}'/>">Редактировать инцидент</a>
             </td>
-            <td>${accident.type.id}</td>
+            <td>${accident.type.name}</td>
             <td>${accident.rules}</td>
             <td>${accident.text}</td>
             <td>${accident.address}</td>
