@@ -36,8 +36,6 @@
         <th data-field=text data-filter-control="select"
             data-sortable="true">Тип инцидента</th>
         <th data-field=text data-filter-control="select"
-            data-sortable="true">Статьи</th>
-        <th data-field=text data-filter-control="select"
             data-sortable="true">Описание инцидента</th>
         <th data-field=address data-filter-control="select"
             data-sortable="true">Адрес инцидента</th>
@@ -54,7 +52,6 @@
                 <a href="<c:url value='/update?id=${accident.id}'/>">Редактировать инцидент</a>
             </td>
             <td>${accident.type.name}</td>
-            <td>${accident.rules}</td>
             <td>${accident.text}</td>
             <td>${accident.address}</td>
         </tr>
