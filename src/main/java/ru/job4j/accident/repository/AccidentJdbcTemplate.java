@@ -7,6 +7,7 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class AccidentJdbcTemplate {
@@ -40,31 +41,20 @@ public class AccidentJdbcTemplate {
     }
 
     public AccidentType getTypeById(int id) {
-        List<AccidentType> result =  jdbc.query("select id, name from types where id = ?",
+        Optional<AccidentType> result = Optional.ofNullable(jdbc.query("select id, name from types where id = ?",
             (resultSet, rowNum) -> AccidentType.of(
-            resultSet.getInt("id"),
-            resultSet.getString("name")) ,id);
-        if (result.size() != 1) {
-            return null;
-        } else {
-            return result.get(0);
-        }
-             //делаем запрос query, который возвращает лист и берем первое значение, чтобы не получить IncorrectResultSizeDataAccessException
-                            //если в таблице не будет значений. Тк. queryForObject ожидает одно и только одно значение
+                resultSet.getInt("id"),
+                resultSet.getString("name")), id).get(0));
+        return result.get();
     }
 
     public Rule getRuleById(int id) {
-        List<Rule> result = jdbc.query("select id, name from rules where id = ?",
+        Optional<Rule> result = Optional.ofNullable(jdbc.query("select id, name from rules where id = ?",
             (resultSet, rowNum) -> Rule.of(
                 resultSet.getInt("id"),
                 resultSet.getString("name")) ,
-            id);
-        if (result.size() != 1) {
-            return null;  // поменять на лист
-        } else {
-            return result.get(0);
-        }
-
+            id).get(0));
+        return result.get();
     }
 
     public List<AccidentType> getTypes() {
@@ -94,7 +84,7 @@ public class AccidentJdbcTemplate {
     }
 
     public Accident findAccidentById(int id) {
-        List<Accident> result = jdbc.query("select id, name, text, address, type_id from accident where id = ?", (rs, row) -> {
+        Optional<Accident> result = Optional.ofNullable(jdbc.query("select id, name, text, address, type_id from accident where id = ?", (rs, row) -> {
             Accident accident = new Accident();
             accident.setId(rs.getInt("id"));
             accident.setName(rs.getString("name"));
@@ -102,11 +92,7 @@ public class AccidentJdbcTemplate {
             accident.setAddress(rs.getString("address"));
             accident.setType(getTypeById(rs.getInt("type_id")));
             return accident;
-        }, id);
-        if (result.size() != 1) {
-            return null;
-        } else {
-            return result.get(0);
-        }
+        }, id).get(0));
+        return result.get();
     }
 }
