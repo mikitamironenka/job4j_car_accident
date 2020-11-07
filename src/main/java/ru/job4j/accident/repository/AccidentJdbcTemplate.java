@@ -35,26 +35,26 @@ public class AccidentJdbcTemplate {
                 accident.setName(rs.getString("name"));
                 accident.setText(rs.getString("text"));
                 accident.setAddress(rs.getString("address"));
-                accident.setType(getTypeById(rs.getInt("type_id")));
+                accident.setType(getTypeById(rs.getInt("type_id")).get());
                 return accident;
             });
     }
 
-    public AccidentType getTypeById(int id) {
+    public Optional<AccidentType> getTypeById(int id) {
         Optional<AccidentType> result = Optional.ofNullable(jdbc.query("select id, name from types where id = ?",
             (resultSet, rowNum) -> AccidentType.of(
                 resultSet.getInt("id"),
                 resultSet.getString("name")), id).get(0));
-        return result.get();
+        return result;
     }
 
-    public Rule getRuleById(int id) {
+    public Optional<Rule> getRuleById(int id) {
         Optional<Rule> result = Optional.ofNullable(jdbc.query("select id, name from rules where id = ?",
             (resultSet, rowNum) -> Rule.of(
                 resultSet.getInt("id"),
                 resultSet.getString("name")) ,
             id).get(0));
-        return result.get();
+        return result;
     }
 
     public List<AccidentType> getTypes() {
@@ -83,16 +83,16 @@ public class AccidentJdbcTemplate {
                 accident.getId());
     }
 
-    public Accident findAccidentById(int id) {
+    public Optional<Accident> findAccidentById(int id) {
         Optional<Accident> result = Optional.ofNullable(jdbc.query("select id, name, text, address, type_id from accident where id = ?", (rs, row) -> {
             Accident accident = new Accident();
             accident.setId(rs.getInt("id"));
             accident.setName(rs.getString("name"));
             accident.setText(rs.getString("text"));
             accident.setAddress(rs.getString("address"));
-            accident.setType(getTypeById(rs.getInt("type_id")));
+            accident.setType(getTypeById(rs.getInt("type_id")).get());
             return accident;
         }, id).get(0));
-        return result.get();
+        return result;
     }
 }

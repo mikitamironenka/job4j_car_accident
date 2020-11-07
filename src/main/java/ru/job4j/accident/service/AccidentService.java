@@ -43,12 +43,16 @@ public class AccidentService {
     }
 
     public Accident findById(int id) {
-        return this.accidentJdbcTemplate.findAccidentById(id);
+        return this.accidentJdbcTemplate.findAccidentById(id)
+            .get();
     }
 
     public void addRulesToAccident(Accident accident, String[] rIds) {
         for (String id : rIds) {
-            accident.getRules().add(accidentJdbcTemplate.getRuleById(Integer.parseInt(id)));
+            accident.getRules()
+                .add(accidentJdbcTemplate
+                    .getRuleById(Integer.parseInt(id))
+                    .get());
         }
     }
 }
