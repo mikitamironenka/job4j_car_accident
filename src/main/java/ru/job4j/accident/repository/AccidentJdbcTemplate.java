@@ -2,6 +2,7 @@ package ru.job4j.accident.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.job4j.accident.exception.AccidentException;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
@@ -35,25 +36,32 @@ public class AccidentJdbcTemplate {
                 accident.setName(rs.getString("name"));
                 accident.setText(rs.getString("text"));
                 accident.setAddress(rs.getString("address"));
-                accident.setType(getTypeById(rs.getInt("type_id")).get());
+                try {
+                    int id = rs.getInt("type_id");
+                    accident.setType(getTypeById(id)
+                        .orElseThrow(() -> new AccidentException("Не найдено типа с id " + id)));
+                } catch (AccidentException e) {
+                    e.printStackTrace();
+                }
                 return accident;
             });
     }
 
     public Optional<AccidentType> getTypeById(int id) {
-        Optional<AccidentType> result = Optional.ofNullable(jdbc.query("select id, name from types where id = ?",
+
+        AccidentType result = jdbc.queryForObject("select id, name from types where id = ?",
             (resultSet, rowNum) -> AccidentType.of(
                 resultSet.getInt("id"),
-                resultSet.getString("name")), id).get(0));
-        return result;
+                resultSet.getString("name")), id);
+        return Optional.ofNullable(result);
     }
 
     public Optional<Rule> getRuleById(int id) {
-        Optional<Rule> result = Optional.ofNullable(jdbc.query("select id, name from rules where id = ?",
+        Optional<Rule> result = Optional.ofNullable(jdbc.queryForObject("select id, name from rules where id = ?",
             (resultSet, rowNum) -> Rule.of(
                 resultSet.getInt("id"),
                 resultSet.getString("name")) ,
-            id).get(0));
+            id));
         return result;
     }
 
@@ -84,15 +92,20 @@ public class AccidentJdbcTemplate {
     }
 
     public Optional<Accident> findAccidentById(int id) {
-        Optional<Accident> result = Optional.ofNullable(jdbc.query("select id, name, text, address, type_id from accident where id = ?", (rs, row) -> {
+        Optional<Accident> result = Optional.ofNullable(jdbc.queryForObject("select id, name, text, address, type_id from accident where id = ?", (rs, row) -> {
             Accident accident = new Accident();
             accident.setId(rs.getInt("id"));
             accident.setName(rs.getString("name"));
             accident.setText(rs.getString("text"));
             accident.setAddress(rs.getString("address"));
-            accident.setType(getTypeById(rs.getInt("type_id")).get());
+            try {
+                accident.setType(getTypeById(rs.getInt("type_id"))
+                    .orElseThrow(() -> new AccidentException("Не найдено типа с id - " + id)));
+            } catch (AccidentException e) {
+                e.printStackTrace();
+            }
             return accident;
-        }, id).get(0));
+        }, id));
         return result;
     }
 }

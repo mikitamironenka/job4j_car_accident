@@ -1,6 +1,7 @@
 package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
+import ru.job4j.accident.exception.AccidentException;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
@@ -42,17 +43,17 @@ public class AccidentService {
         this.accidentJdbcTemplate.update(accident);
     }
 
-    public Accident findById(int id) {
+    public Accident findById(int id) throws AccidentException {
         return this.accidentJdbcTemplate.findAccidentById(id)
-            .get();
+            .orElseThrow(() -> new AccidentException("Проишествие не найдено"));
     }
 
-    public void addRulesToAccident(Accident accident, String[] rIds) {
+    public void addRulesToAccident(Accident accident, String[] rIds) throws Exception {
         for (String id : rIds) {
             accident.getRules()
                 .add(accidentJdbcTemplate
                     .getRuleById(Integer.parseInt(id))
-                    .get());
+                    .orElseThrow(() -> new AccidentException("Статья не найдена")));
         }
     }
 }
