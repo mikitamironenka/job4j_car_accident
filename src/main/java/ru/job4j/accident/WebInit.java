@@ -6,7 +6,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import ru.job4j.accident.config.SpringDataConfig;
 import ru.job4j.accident.config.WebConfig;
-import ru.job4j.accident.security.SecurityConfig;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
