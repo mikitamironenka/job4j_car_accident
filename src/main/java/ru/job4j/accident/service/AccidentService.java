@@ -1,12 +1,11 @@
 package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
+import ru.job4j.accident.exception.AccidentException;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentRepository;
-import ru.job4j.accident.repository.AccidentTypeRepository;
-import ru.job4j.accident.repository.RuleRepository;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,62 +14,48 @@ import java.util.Optional;
 @Service
 public class AccidentService {
 
-    private final AccidentRepository accidentRepository;
-    private final AccidentTypeRepository accidentTypeRepository;
-    private final RuleRepository ruleRepository;
+//    private AccidentMem accidentMem;
+    private AccidentJdbcTemplate accidentJdbcTemplate;
 
-    public AccidentService(AccidentRepository accidentRepository, AccidentTypeRepository accidentTypeRepository, RuleRepository ruleRepository) {
-        this.accidentRepository = accidentRepository;
-        this.accidentTypeRepository = accidentTypeRepository;
-        this.ruleRepository = ruleRepository;
+//    public AccidentService(AccidentMem accidentMem) {
+//        this.accidentMem = accidentMem;
+//    }
+
+    public AccidentService(AccidentJdbcTemplate accidentJdbcTemplate) {
+        this.accidentJdbcTemplate = accidentJdbcTemplate;
     }
 
     public List<Accident> getAccidents() {
-        List<Accident> res = new ArrayList<>();
-        this.accidentRepository.findAll().forEach(res :: add);
-        return res;
+        return this.accidentJdbcTemplate.getAll();
     }
 
     public List<AccidentType> getTypes() {
-        List<AccidentType> res = new ArrayList<>();
-        this.accidentTypeRepository.findAll().forEach(res :: add);
-        return res;
+        return this.accidentJdbcTemplate.getTypes();
     }
 
     public List<Rule> getRules() {
-        List<Rule> res = new ArrayList<>();
-        this.ruleRepository.findAll().forEach(res :: add);
-        return res;
+        return this.accidentJdbcTemplate.getRules();
     }
 
     public void create(Accident accident) {
-        this.accidentRepository.save(accident);
+        this.accidentJdbcTemplate.save(accident);
     }
 
     public void update(Accident accident) {
-        Optional<Accident> accdnt = accidentRepository.findById(accident.getId());
-        if (accdnt.isPresent()){
-            Accident accidentTemp = accdnt.get();
-            if (accident.getName() != null)
-                accidentTemp.setName(accident.getName());
-            if (accident.getText() != null)
-                accidentTemp.setText(accident.getText());
-            if (accident.getAddress() != null)
-                accidentTemp.setAddress(accident.getAddress());
-            this.accidentRepository.save(accidentTemp);
-        }
+        this.accidentJdbcTemplate.update(accident);
     }
 
-    public Optional<Accident> findById(int id) {
-        return this.accidentRepository.findById(id);
+    public Accident findById(int id) throws AccidentException {
+        return this.accidentJdbcTemplate.findAccidentById(id)
+            .orElseThrow(() -> new AccidentException("Проишествие не найдено"));
     }
 
-    public void addRulesToAccident(Accident accident, String[] rIds) {
+    public void addRulesToAccident(Accident accident, String[] rIds) throws Exception {
         for (String id : rIds) {
             accident.getRules()
-                .add(ruleRepository
-                    .findById(Integer.parseInt(id))
-                    .get());
+                .add(accidentJdbcTemplate
+                    .getRuleById(Integer.parseInt(id))
+                    .orElseThrow(() -> new AccidentException("Статья не найдена")));
         }
     }
 }
