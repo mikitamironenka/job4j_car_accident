@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,14 +19,14 @@ public class LoginControl {
     public String loginPage(@RequestParam(value = "error", required = false) String error,
                             @RequestParam(value = "logout", required = false) String logout,
                             Model model) {
-        String errorMessage = null;
+        String errorMessge = null;
         if(error != null) {
-            errorMessage = "Username or Password is incorrect !!";
+            errorMessge = "Username or Password is incorrect !!";
         }
         if(logout != null) {
-            errorMessage = "You have been successfully logged out !!";
+            errorMessge = "You have been successfully logged out !!";
         }
-        model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("errorMessge", errorMessge);
         return "login";
     }
 

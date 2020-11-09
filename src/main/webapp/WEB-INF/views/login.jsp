@@ -3,7 +3,7 @@
 <html>
 <body>
 <c:if test="${not empty errorMessge}">
-    <div style="color:red; font-weight: bold; margin: 30px 0px;">
+    <div style=" color:red; font-weight: bold; margin: 30px 0px;">
             ${errorMessge}
     </div>
 </c:if>
