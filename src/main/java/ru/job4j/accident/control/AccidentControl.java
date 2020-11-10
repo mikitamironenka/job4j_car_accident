@@ -33,17 +33,17 @@ public class AccidentControl {
         return "accident/update";
     }
 
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute Accident accident) {
+        accidentService.update(accident);
+        return "redirect:/";
+    }
+
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
         String[] rIds = req.getParameterValues("rIds");
         accidentService.addRulesToAccident(accident, rIds);
         accidentService.create(accident);
-        return "redirect:/";
-    }
-
-    @PostMapping("/edit")
-    public String edit(@ModelAttribute Accident accident) {
-        accidentService.update(accident);
         return "redirect:/";
     }
 

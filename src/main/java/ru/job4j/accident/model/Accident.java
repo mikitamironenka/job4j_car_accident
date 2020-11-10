@@ -5,11 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "accident")
 public class Accident {
@@ -23,28 +23,21 @@ public class Accident {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private AccidentType type;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     private List<Rule> rules = new ArrayList<>();
 
-    public Accident(String name, String text, String address) {
-        this.name = name;
-        this.text = text;
-        this.address = address;
+    public Accident() {
+
     }
 
-    public Accident(int id, String name, String text, String address) {
-        this.id = id;
-        this.name = name;
-        this.text = text;
-        this.address = address;
-    }
-
-    public Accident(int id, String name, AccidentType type, List<Rule> rules, String text, String address) {
-        this.id = id;
+    public Accident(String name, String text, String address, AccidentType type) {
         this.name = name;
         this.text = text;
         this.address = address;
         this.type = type;
-        this.rules = rules;
+    }
+
+    public void addRule(Rule... rule) {
+        rules.addAll(Arrays.asList(rule));
     }
 }

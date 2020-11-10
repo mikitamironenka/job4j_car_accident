@@ -1,6 +1,7 @@
 package ru.job4j.accident.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,6 +13,9 @@ public class Rule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    public Rule() {
+    }
 
     public static Rule of(int id, String name) {
         Rule rule = new Rule();

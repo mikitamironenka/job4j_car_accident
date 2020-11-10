@@ -62,8 +62,14 @@ public class AccidentService {
         }
     }
 
-    public Optional<Accident> findById(int id) {
-        return this.accidentRepository.findById(id);
+    public Accident findById(int id) {
+        Accident accident = new Accident();
+        try {
+            accident = this.accidentRepository.findById(id).orElseThrow(() -> new AccidentException("Не найдено инцидента с id - " + id));
+        } catch (AccidentException e) {
+            e.printStackTrace();
+        }
+        return accident;
     }
 
     public void addRulesToAccident(Accident accident, String[] rIds) {
