@@ -2,12 +2,8 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.exception.AccidentException;
-import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentRepository;
-import ru.job4j.accident.repository.AccidentTypeRepository;
-import ru.job4j.accident.repository.RuleRepository;
+import ru.job4j.accident.model.*;
+import ru.job4j.accident.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +15,15 @@ public class AccidentService {
     private final AccidentRepository accidentRepository;
     private final AccidentTypeRepository accidentTypeRepository;
     private final RuleRepository ruleRepository;
+    private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
-    public AccidentService(AccidentRepository accidentRepository, AccidentTypeRepository accidentTypeRepository, RuleRepository ruleRepository) {
+    public AccidentService(AccidentRepository accidentRepository, AccidentTypeRepository accidentTypeRepository, RuleRepository ruleRepository, UserRepository users, AuthorityRepository authorities) {
         this.accidentRepository = accidentRepository;
         this.accidentTypeRepository = accidentTypeRepository;
         this.ruleRepository = ruleRepository;
+        this.userRepository = users;
+        this.authorityRepository = authorities;
     }
 
     public List<Accident> getAccidents() {
@@ -79,5 +79,13 @@ public class AccidentService {
                     .findById(Integer.parseInt(id))
                     .get());
         }
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public Authority findByAuthority(String authority) {
+        return authorityRepository.findByAuthority(authority);
     }
 }
