@@ -74,10 +74,14 @@ public class AccidentService {
 
     public void addRulesToAccident(Accident accident, String[] rIds) {
         for (String id : rIds) {
-            accident.getRules()
-                .add(ruleRepository
-                    .findById(Integer.parseInt(id))
-                    .get());
+            try {
+                accident.getRules()
+                    .add(ruleRepository
+                        .findById(Integer.parseInt(id))
+                        .orElseThrow(() -> new AccidentException("Не найдено статьи с id ")));
+            } catch (AccidentException e) {
+                e.printStackTrace();
+            }
         }
     }
 
